@@ -12,36 +12,7 @@ Original file is located at
     </a>
 </p>
 
-# **Space X  Falcon 9 First Stage Landing Prediction**
 
-## Lab 2: Data wrangling
-
-Estimated time needed: **60** minutes
-
-In this lab, we will perform some Exploratory Data Analysis (EDA) to find some patterns in the data and determine what would be the label for training supervised models.
-
-In the data set, there are several different cases where the booster did not land successfully. Sometimes a landing was attempted but failed due to an accident; for example, <code>True Ocean</code> means the mission outcome was successfully  landed to a specific region of the ocean while <code>False Ocean</code> means the mission outcome was unsuccessfully landed to a specific region of the ocean. <code>True RTLS</code> means the mission outcome was successfully  landed to a ground pad <code>False RTLS</code> means the mission outcome was unsuccessfully landed to a ground pad.<code>True ASDS</code> means the mission outcome was successfully landed on  a drone ship <code>False ASDS</code> means the mission outcome was unsuccessfully landed on a drone ship.
-
-In this lab we will mainly convert those outcomes into Training Labels with `1` means the booster successfully landed `0` means it was unsuccessful.
-
-Falcon 9 first stage will land successfully
-
-![](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/landing_1.gif)
-
-Several examples of an unsuccessful landing are shown here:
-
-![](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/crash.gif)
-
-## Objectives
-Perform exploratory  Data Analysis and determine Training Labels
-
-- Exploratory Data Analysis
-- Determine Training Labels
-
-----
-
-Install the below libraries
-"""
 
 !pip install pandas
 !pip install numpy
@@ -56,17 +27,12 @@ import pandas as pd
 #NumPy is a library for the Python programming language, adding support for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays
 import numpy as np
 
-"""### Data Analysis
 
-Load Space X dataset, from last section.
-"""
 
 df=pd.read_csv("https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/dataset_part_1.csv")
 df.head(10)
 
-"""Identify and calculate the percentage of the missing values in each attribute
 
-"""
 
 df.isnull().sum()/len(df)*100
 
@@ -131,8 +97,6 @@ some are shown in the following plot:
 
 Use the method  <code>.value_counts()</code> to determine the number and occurrence of each orbit in the  column <code>Orbit</code>
 
-
-Note: Do not count GTO, as it is a transfer orbit and not itself geostationary.
 """
 
 # Apply value_counts on Orbit column
@@ -204,24 +168,3 @@ df.to_csv("dataset_part_2.csv", index=False)
 count = (df['LaunchSite'] == "CCAFS SLC 40").sum()
 count
 
-"""## Authors
-
-<a href="https://www.linkedin.com/in/joseph-s-50398b136/">Joseph Santarcangelo</a> has a PhD in Electrical Engineering, his research focused on using machine learning, signal processing, and computer vision to determine how videos impact human cognition. Joseph has been working for IBM since he completed his PhD.
-
-<a href="https://www.linkedin.com/in/nayefaboutayoun/">Nayef Abou Tayoun</a> is a Data Scientist at IBM and pursuing a Master of Management in Artificial intelligence degree at Queen's University.
-
-<!--
-## Change Log
--->
-
-<!--
-| Date (YYYY-MM-DD) | Version | Changed By | Change Description      |
-| ----------------- | ------- | ---------- | ----------------------- |
-| 2021-08-31        | 1.1     | Lakshmi Holla    | Changed Markdown |
-| 2020-09-20        | 1.0     | Joseph     | Modified Multiple Areas |
-| 2020-11-04        | 1.1.    | Nayef      | updating the input data |
-| 2021-05-026       | 1.1.    | Joseph      | updating the input data |
--->
-
-Copyright © 2021 IBM Corporation. All rights reserved.
-"""
