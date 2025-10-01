@@ -16,12 +16,6 @@ Original file is located at
 
 Estimated time needed: **60** minutes.
 
-## Introduction
-Using this Python notebook you will:
-
-1.  Understand the Spacex DataSet
-2.  Load the dataset  into the corresponding table in a Db2 database
-3.  Execute SQL queries to answer assignment questions
 
 ## Overview of the DataSet
 
@@ -88,155 +82,50 @@ df.to_sql("SPACEXTBL", con, if_exists='replace', index=False,method="multi")
 # Commented out IPython magic to ensure Python compatibility.
 # %sql create table SPACEXTABLE as select * from SPACEXTBL where Date is not null
 
-"""## Tasks
-
-Now write and execute SQL queries to solve the assignment tasks.
-
-**Note: If the column names are in mixed case enclose it in double quotes
-   For Example "Landing_Outcome"**
-
-### Task 1
 
 
 
 
-##### Display the names of the unique launch sites  in the space mission
 
-"""
-
-# Commented out IPython magic to ensure Python compatibility.
-# %sql SELECT DISTINCT Launch_Site FROM SPACEXTABLE;
-
-"""
-### Task 2
-
-
-#####  Display 5 records where launch sites begin with the string 'CCA'
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select * from SPACEXTABLE where Launch_Site like 'CCA%' limit 5;
 
-"""### Task 3
 
-
-
-
-##### Display the total payload mass carried by boosters launched by NASA (CRS)
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select sum(PAYLOAD_MASS__KG_) from SPACEXTABLE where Customer = 'NASA (CRS)'
 
-"""### Task 4
 
-
-
-
-##### Display average payload mass carried by booster version F9 v1.1
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select avg(PAYLOAD_MASS__KG_) from SPACEXTABLE where Booster_Version like 'F9 v1.1%'
 
-"""### Task 5
 
-##### List the date when the first succesful landing outcome in ground pad was acheived.
-
-
-_Hint:Use min function_
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select min(DATE) from SPACEXTABLE where Landing_Outcome = 'Success (ground pad)'
 
-"""### Task 6
-
-##### List the names of the boosters which have success in drone ship and have payload mass greater than 4000 but less than 6000
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select Booster_Version from SPACEXTABLE where Landing_Outcome = 'Success (drone ship)' and PAYLOAD_MASS__KG_ between 4000 and 6000
 
-"""### Task 7
 
-
-
-
-##### List the total number of successful and failure mission outcomes
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select Mission_Outcome, count(*) from SPACEXTABLE group by Mission_Outcome
 
-"""### Task 8
 
-
-
-##### List all the booster_versions that have carried the maximum payload mass, using a subquery with a suitable aggregate function.
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select Booster_Version from SPACEXTABLE where PAYLOAD_MASS__KG_=(select max(PAYLOAD_MASS__KG_) from SPACEXTABLE)
 
-"""### Task 9
 
-
-##### List the records which will display the month names, failure landing_outcomes in drone ship ,booster versions, launch_site for the months in year 2015.
-
-**Note: SQLLite does not support monthnames. So you need to use  substr(Date, 6,2) as month to get the months and substr(Date,0,5)='2015' for year.**
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select SUBSTR(DATE, 6, 2) as Month, Landing_Outcome, Booster_Version, Launch_Site from SPACEXTABLE where Landing_Outcome = 'Failure (drone ship)' and SUBSTR(DATE, 0, 5) = '2015'
 
-"""### Task 10
-
-
-
-
-##### Rank the count of landing outcomes (such as Failure (drone ship) or Success (ground pad)) between the date 2010-06-04 and 2017-03-20, in descending order.
-
-"""
 
 # Commented out IPython magic to ensure Python compatibility.
 # %sql select Landing_Outcome, count(*) as Count from SPACEXTABLE where Date between '2010-06-04' and '2017-03-20' group by Landing_Outcome order by Count desc
 
-"""### Reference Links
-
-* <a href ="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Labs_Coursera_V5/labs/Lab%20-%20String%20Patterns%20-%20Sorting%20-%20Grouping/instructional-labs.md.html?origin=www.coursera.org">Hands-on Lab : String Patterns, Sorting and Grouping</a>  
-
-*  <a  href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Labs_Coursera_V5/labs/Lab%20-%20Built-in%20functions%20/Hands-on_Lab__Built-in_Functions.md.html?origin=www.coursera.org">Hands-on Lab: Built-in functions</a>
-
-*  <a  href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Labs_Coursera_V5/labs/Lab%20-%20Sub-queries%20and%20Nested%20SELECTs%20/instructional-labs.md.html?origin=www.coursera.org">Hands-on Lab : Sub-queries and Nested SELECT Statements</a>
-
-*   <a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Module%205/DB0201EN-Week3-1-3-SQLmagic.ipynb">Hands-on Tutorial: Accessing Databases with SQL magic</a>
-
-*  <a href= "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Module%205/DB0201EN-Week3-1-4-Analyzing.ipynb">Hands-on Lab: Analyzing a real World Data Set</a>
-
-## Author(s)
-
-<h4> Lakshmi Holla </h4>
-
-## Other Contributors
-
-<h4> Rav Ahuja </h4>
-
-<!--
-## Change log
-| Date | Version | Changed by | Change Description |
-|------|--------|--------|---------|
-| 2024-07-10 | 1.1 |Anita Verma | Changed Version|
-| 2021-07-09 | 0.2 |Lakshmi Holla | Changes made in magic sql|
-| 2021-05-20 | 0.1 |Lakshmi Holla | Created Initial Version |
--->
-
-## <h3 align="center"> © IBM Corporation 2021. All rights reserved. <h3/>
-"""
