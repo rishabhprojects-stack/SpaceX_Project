@@ -14,35 +14,7 @@ Original file is located at
 
 # **Space X  Falcon 9 First Stage Landing Prediction**
 
-## Web scraping Falcon 9 and Falcon Heavy Launches Records from Wikipedia
 
-Estimated time needed: **40** minutes
-
-In this lab, you will be performing web scraping to collect Falcon 9 historical launch records from a Wikipedia page titled `List of Falcon 9 and Falcon Heavy launches`
-
-https://en.wikipedia.org/wiki/List_of_Falcon_9_and_Falcon_Heavy_launches
-
-![](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_1_L2/images/Falcon9_rocket_family.svg)
-
-Falcon 9 first stage will land successfully
-
-![](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/landing_1.gif)
-
-Several examples of an unsuccessful landing are shown here:
-
-![](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/crash.gif)
-
-More specifically, the launch records are stored in a HTML table shown below:
-
-![](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_1_L2/images/falcon9-launches-wiki.png)
-
-## Objectives
-Web scrap Falcon 9 launch records with `BeautifulSoup`:
-- Extract a Falcon 9 launch records HTML table from Wikipedia
-- Parse the table and convert it into a Pandas data frame
-
-First let's import required packages for this lab
-"""
 
 !pip3 install beautifulsoup4
 !pip3 install requests
@@ -112,10 +84,7 @@ def extract_column_from_header(row):
         colunm_name = colunm_name.strip()
         return colunm_name
 
-"""To keep the lab tasks consistent, you will be asked to scrape the data from a snapshot of the  `List of Falcon 9 and Falcon Heavy launches` Wikipage updated on
-`9th June 2021`
 
-"""
 
 static_url = "https://en.wikipedia.org/w/index.php?title=List_of_Falcon_9_and_Falcon_Heavy_launches&oldid=1027686922"
 
@@ -125,12 +94,7 @@ headers = {
                   "Chrome/91.0.4472.124 Safari/537.36"
 }
 
-"""Next, request the HTML page from the above URL and get a `response` object
 
-### TASK 1: Request the Falcon9 Launch Wiki page from its URL
-
-First, let's perform an HTTP GET method to request the Falcon9 Launch HTML page, as an HTTP response.
-"""
 
 # use requests.get() method with the provided static_url and headers
 # assign the response to a object
@@ -163,9 +127,7 @@ Let's try to find all tables on the wiki page first. If you need to refresh your
 # Assign the result to a list called `html_tables`
 html_tables = beautiful_response.find_all("table")
 
-"""Starting from the third table is our target table contains the actual launch records.
 
-"""
 
 # Let's print the third table and check its content
 first_launch_table = html_tables[2]
@@ -334,37 +296,7 @@ for table_number,table in enumerate(beautiful_response.find_all('table',"wikitab
             launch_dict['Booster landing'].append(booster_landing)
             #print(booster_landing)
 
-"""After you have fill in the parsed launch record values into `launch_dict`, you can create a dataframe from it.
 
-"""
-
-df= pd.DataFrame({ key:pd.Series(value) for key, value in launch_dict.items() })
-
-"""We can now export it to a <b>CSV</b> for the next section, but to make the answers consistent and in case you have difficulties finishing this lab.
-
-Following labs will be using a provided dataset to make each lab independent.
-
-<code>df.to_csv('spacex_web_scraped.csv', index=False)</code>
-
-## Authors
-
-<a href="https://www.linkedin.com/in/yan-luo-96288783/">Yan Luo</a>
-
-<a href="https://www.linkedin.com/in/nayefaboutayoun/">Nayef Abou Tayoun</a>
-
-<!--
-## Change Log
--->
-
-<!--
-| Date (YYYY-MM-DD) | Version | Changed By | Change Description      |
-| ----------------- | ------- | ---------- | ----------------------- |
-| 2021-06-09        | 1.0     | Yan Luo    | Tasks updates           |
-| 2020-11-10        | 1.0     | Nayef      | Created the initial version |
--->
-
-Copyright © 2021 IBM Corporation. All rights reserved.
-"""
 
 df= pd.DataFrame({ key:pd.Series(value) for key, value in launch_dict.items() })
 display(df.head())
